@@ -8,9 +8,7 @@ public class PlayerInputHandler : MonoBehaviour
 {
     public float xInput { get; private set; }
     public float yInput { get; private set; }
-
-    [SerializeField] 
-    private float inputHoldTime = 0.2f;
+    public bool isRunning { get; private set; }
     
     public Vector2 PlayerMoveInput { get; private set; }
 
@@ -20,5 +18,13 @@ public class PlayerInputHandler : MonoBehaviour
         
         xInput = PlayerMoveInput.x;
         yInput = PlayerMoveInput.y;
+    }
+
+    public void OnRunInput(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            isRunning = !isRunning;
+        }
     }
 }

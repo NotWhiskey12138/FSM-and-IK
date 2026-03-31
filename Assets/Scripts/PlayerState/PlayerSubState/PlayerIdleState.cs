@@ -26,7 +26,10 @@ public class PlayerIdleState : PlayerGroundState
 
         if (xInput != 0 || yInput != 0)
         {
-            stateMachine.ChangeState(player.WalkState);
+            if(isRunning)
+                stateMachine.ChangeState(player.RunState);
+            else
+                stateMachine.ChangeState(player.WalkState);
         }
     }
 

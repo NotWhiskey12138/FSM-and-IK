@@ -11,7 +11,9 @@ public class Player : MonoBehaviour
     public PlayerWalkState WalkState { get; private set; }
     public PlayerRunState RunState { get; private set; }
     
+    [Header("可视数据")]
     [SerializeField] private PlayerData playerData;
+    [SerializeField] private GameObject groundCheckPoint;
     
     public Animator anim { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
@@ -22,6 +24,8 @@ public class Player : MonoBehaviour
     private Vector3 Direction;
     private float turnAmount;
     public Vector3 currentVelocity { get; private set; }
+    
+    
 
     private void Awake()
     {
@@ -40,13 +44,15 @@ public class Player : MonoBehaviour
         MovementCollider = GetComponent<CapsuleCollider>();
         
         stateMachine.InitializeState(IdleState);
+        
     }
 
     private void Update()
     {
         stateMachine.currentState.LogicUpdate();
         
-        Debug.Log(currentVelocity);
+        //Debug.Log(currentVelocity);
+        Debug.Log(stateMachine.currentState);
     }
 
     private void FixedUpdate()
@@ -61,7 +67,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public bool CheckIfTouchingGrounded()
     {
-        var collider = Physics.OverlapSphere(transform.position, playerData.groundCheckRadius, playerData.whatIsGround);
+        var collider = Physics.OverlapSphere(groundCheckPoint.transform.position, playerData.groundCheckRadius, playerData.whatIsGround);
     
         if (collider.Length != 0)
         {
@@ -79,7 +85,7 @@ public class Player : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, playerData.groundCheckRadius);
+        Gizmos.DrawSphere(groundCheckPoint.transform.position, playerData.groundCheckRadius);
     }
     
     #endregion

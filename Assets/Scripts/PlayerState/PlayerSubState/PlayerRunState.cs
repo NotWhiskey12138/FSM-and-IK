@@ -21,11 +21,23 @@ public class PlayerRunState : PlayerGroundState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        if (xInput == 0 && yInput == 0)
+        {
+            stateMachine.ChangeState(player.IdleState);
+        }
+        else if (!isRunning)
+        {
+            stateMachine.ChangeState(player.WalkState);
+        }
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+
+        player.SetVelocityHorizontal(xInput * playerData.runSpeed, yInput * playerData.runSpeed);
+        player.SetRotation(xInput, yInput, playerData.turnSpeed);
     }
 
     public override void DoCheck()
