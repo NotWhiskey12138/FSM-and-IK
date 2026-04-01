@@ -6,8 +6,6 @@ public class PlayerAttackState : PlayerAbilityState
 {
     protected bool canCombo;
     protected bool shouldCombo;
-
-    protected int attackCounter;
     
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -19,49 +17,49 @@ public class PlayerAttackState : PlayerAbilityState
         canCombo = false;
         shouldCombo = false;
 
-        if (attackCounter >= 3)
-        {
-            attackCounter = 0;
-        }
+        player.anim.SetInteger("attackCounter", player.attackCounter);
 
-        player.anim.SetInteger("attackCounter", attackCounter);
-        
-        player.SetVelocityZero();
+        player.useRootMotion = true;
     }
 
     public override void Exit()
     {
         base.Exit();
 
-        attackCounter++;
-        
-        Debug.Log("attackCounter:" + attackCounter);
+        player.useRootMotion = false;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
         
-        //Debug.Log("canCombo"+canCombo);
-        //Debug.Log("shouldcCombo"+shouldCombo);
-
-        /*if (canCombo && player.InputHandler.attackInput)
+        if (stateMachine.currentState != this)
+            return;
+ 
+        if (canCombo && player.InputHandler.attackInput)
         {
             shouldCombo = true;
         }
-        */
-
-        /*if (isAnimationFinished)
+ 
+        if (isAnimationFinished)
         {
-            if (shouldCombo)
+            if (shouldCombo && player.attackCounter < 2)
             {
-                StateTransfer();
+                player.attackCounter++;
+                canCombo = false;
+                shouldCombo = false;
+                isAnimationFinished = false;
+ 
+                player.anim.SetInteger("attackCounter", player.attackCounter);
+                player.anim.SetTrigger("attackNext");
             }
             else
             {
+                player.attackCounter = 0;
+ 
                 if (player.InputHandler.xInput != 0 || player.InputHandler.yInput != 0)
                 {
-                    if(player.InputHandler.isRunning)
+                    if (player.InputHandler.isRunning)
                         stateMachine.ChangeState(player.RunState);
                     else
                         stateMachine.ChangeState(player.WalkState);
@@ -71,7 +69,7 @@ public class PlayerAttackState : PlayerAbilityState
                     stateMachine.ChangeState(player.IdleState);
                 }
             }
-        }*/
+        }
     }
 
     public override void PhysicsUpdate()
@@ -87,14 +85,14 @@ public class PlayerAttackState : PlayerAbilityState
     public override void AnimationTrigger()
     {
         base.AnimationTrigger();
+        Debug.Log("=== AnimationTrigger(canCombo) 被调用了 ===");
         canCombo = true;
     }
 
     public override void AnimationFinishedTrigger()
     {
         base.AnimationFinishedTrigger();
-
-        isAbilityDone = true;
+        Debug.Log("=== AnimationFinished 被调用了 ===");
     }
 
     protected virtual void StateTransfer()

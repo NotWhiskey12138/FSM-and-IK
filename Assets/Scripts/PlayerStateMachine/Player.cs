@@ -11,12 +11,14 @@ public class Player : MonoBehaviour
     public PlayerWalkState WalkState { get; private set; }
     public PlayerRunState RunState { get; private set; }
     public PlayerAttackState Attack1State { get; private set; }
-    public PlayerAttackState Attack2State { get; private set; }
-    public PlayerAttackState Attack3State { get; private set; }
+    public bool useRootMotion { get; set; }
     
     [Header("可视数据")]
     [SerializeField] private PlayerData playerData;
     [SerializeField] private GameObject groundCheckPoint;
+    
+    [Header("攻击属性")]
+    [HideInInspector] public int attackCounter = 0;
     
     public Animator anim { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
@@ -39,8 +41,6 @@ public class Player : MonoBehaviour
         RunState = new PlayerRunState(this, stateMachine, playerData, "run");
 
         Attack1State = new PlayerAttackState(this, stateMachine, playerData, "attack");
-        Attack2State = new PlayerAttackState(this, stateMachine, playerData, "attack");
-        Attack3State = new PlayerAttackState(this, stateMachine, playerData, "attack");
     }
 
     private void Start()
@@ -148,4 +148,21 @@ public class Player : MonoBehaviour
     private void AnimationTrigger() => stateMachine.currentState.AnimationTrigger();
         
     private void AnimationFinishedTrigger() => stateMachine.currentState.AnimationFinishedTrigger();
+
+    public bool CanUseFootIK() {
+        return stateMachine.currentState == IdleState || stateMachine.currentState == WalkState || stateMachine.currentState == RunState;
+    }
+
+    private void OnAnimatorMove()
+    {
+        if (useRootMotion)
+        {
+            Vector3 deltaPos = anim.deltaPosition;
+            
+            deltaPos.y = rigid.velocity.y * Time.deltaTime;
+            rigid.MovePosition(rigid.position + deltaPos);
+
+            rigid.MoveRotation(rigid.rotation * anim.deltaRotation);
+        }
+    }
 }

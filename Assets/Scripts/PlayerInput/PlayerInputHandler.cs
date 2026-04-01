@@ -24,7 +24,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void OnRunInput(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.started)
         {
             isRunning = !isRunning;
         }

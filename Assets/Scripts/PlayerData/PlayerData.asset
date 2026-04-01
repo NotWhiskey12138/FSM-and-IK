@@ -15,7 +15,7 @@ MonoBehaviour:
   walkSpeed: 2
   runSpeed: 5
   turnSpeed: 10
-  groundCheckRadius: 0.1
+  groundCheckRadius: 0.02
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8

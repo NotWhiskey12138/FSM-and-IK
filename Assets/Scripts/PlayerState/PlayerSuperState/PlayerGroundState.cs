@@ -34,6 +34,7 @@ public class PlayerGroundState : PlayerState
 
         if (player.InputHandler.attackInput)
         {
+            player.attackCounter = 0;
             stateMachine.ChangeState(player.Attack1State);
         }
         

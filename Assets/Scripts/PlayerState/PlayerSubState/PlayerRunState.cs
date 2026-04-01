@@ -11,6 +11,8 @@ public class PlayerRunState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
+        
+        
     }
 
     public override void Exit()
@@ -21,6 +23,9 @@ public class PlayerRunState : PlayerGroundState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        
+        if (stateMachine.currentState != this)
+            return;
 
         if (xInput == 0 && yInput == 0)
         {

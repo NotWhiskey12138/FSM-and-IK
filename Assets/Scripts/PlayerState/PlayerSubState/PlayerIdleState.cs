@@ -24,6 +24,9 @@ public class PlayerIdleState : PlayerGroundState
     {
         base.LogicUpdate();
 
+        if (stateMachine.currentState != this)
+            return;
+        
         if (xInput != 0 || yInput != 0)
         {
             if(isRunning)
