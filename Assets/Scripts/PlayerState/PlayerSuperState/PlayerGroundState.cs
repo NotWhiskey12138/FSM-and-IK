@@ -7,6 +7,7 @@ public class PlayerGroundState : PlayerState
     protected float xInput;
     protected float yInput;
     protected bool isRunning;
+    protected bool isSprinting;
 
     private bool isGrounded;
     
@@ -31,6 +32,7 @@ public class PlayerGroundState : PlayerState
         xInput = player.InputHandler.xInput;
         yInput = player.InputHandler.yInput;
         isRunning =  player.InputHandler.isRunning;
+        isSprinting = player.InputHandler.isSprinting;
 
         if (player.InputHandler.attackInput)
         {

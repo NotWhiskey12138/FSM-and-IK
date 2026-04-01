@@ -9,6 +9,7 @@ public class PlayerInputHandler : MonoBehaviour
     public float xInput { get; private set; }
     public float yInput { get; private set; }
     public bool isRunning { get; private set; }
+    public bool isSprinting { get; private set; }
     
     public bool attackInput { get; private set; }
     
@@ -27,6 +28,18 @@ public class PlayerInputHandler : MonoBehaviour
         if (context.started)
         {
             isRunning = !isRunning;
+        }
+    }
+
+    public void OnSprintInput(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            isSprinting = true;
+        }
+        else if (context.canceled)
+        {
+            isSprinting = false;
         }
     }
 

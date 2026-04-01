@@ -31,8 +31,10 @@ public class PlayerIdleState : PlayerGroundState
         {
             if(isRunning)
                 stateMachine.ChangeState(player.RunState);
-            else
+            else if(!isRunning)
                 stateMachine.ChangeState(player.WalkState);
+            else if(isSprinting)
+                stateMachine.ChangeState(player.SprintState);
         }
     }
 

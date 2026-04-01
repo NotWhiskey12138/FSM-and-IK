@@ -35,6 +35,10 @@ public class PlayerRunState : PlayerGroundState
         {
             stateMachine.ChangeState(player.WalkState);
         }
+        else if (isSprinting)
+        {
+            stateMachine.ChangeState(player.SprintState);
+        }
     }
 
     public override void PhysicsUpdate()

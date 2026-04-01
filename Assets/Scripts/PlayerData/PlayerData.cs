@@ -9,6 +9,7 @@ public class PlayerData : ScriptableObject
     public float walkSpeed;
     public float runSpeed;
     public float turnSpeed;
+    public float sprintSpeed;
 
     [Header("地面检测")]
     public float groundCheckRadius; //地面检测半径

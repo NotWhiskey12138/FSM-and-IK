@@ -9203,6 +9203,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 425a1f00-4f25-49c7-b7bc-88809cfc8c32
     m_ActionName: GamePlay/Attack[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6269011677309287615}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnSprintInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ec958d93-1263-4f99-96f0-8e3c04b6b180
+    m_ActionName: GamePlay/Sprint[/Keyboard/shift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: KeyBoard
   m_DefaultActionMap: GamePlay
@@ -10795,11 +10811,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   footOffset: 0.1
-  downRayLength: 1.5
-  forwardCheckDist: 0.5
-  maxStepHeight: 0.4
+  rayStartHeight: 0.6
+  rayLength: 1.5
   footYSmooth: 15
   bodyYSmooth: 8
+  maxBodyRaise: 0.5
   leftCurveName: l_Foot_IK
   rightCurveName: r_Foot_IK
 --- !u!23 &7898706588334257700

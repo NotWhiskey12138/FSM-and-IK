@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public PlayerIdleState IdleState { get; private set; }
     public PlayerWalkState WalkState { get; private set; }
     public PlayerRunState RunState { get; private set; }
+    public PlayerSprintState SprintState { get; private set; }
     public PlayerAttackState Attack1State { get; private set; }
     public bool useRootMotion { get; set; }
     
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour
         IdleState = new PlayerIdleState(this, stateMachine, playerData, "idle");
         WalkState = new PlayerWalkState(this, stateMachine, playerData, "walk");
         RunState = new PlayerRunState(this, stateMachine, playerData, "run");
+        SprintState = new PlayerSprintState(this, stateMachine, playerData, "sprint");
 
         Attack1State = new PlayerAttackState(this, stateMachine, playerData, "attack");
     }
@@ -153,6 +155,9 @@ public class Player : MonoBehaviour
         return stateMachine.currentState == IdleState || stateMachine.currentState == WalkState || stateMachine.currentState == RunState;
     }
 
+    /// <summary>
+    /// 让Root接管角色位移
+    /// </summary>
     private void OnAnimatorMove()
     {
         if (useRootMotion)
