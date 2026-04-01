@@ -10,6 +10,8 @@ public class PlayerInputHandler : MonoBehaviour
     public float yInput { get; private set; }
     public bool isRunning { get; private set; }
     
+    public bool attackInput { get; private set; }
+    
     public Vector2 PlayerMoveInput { get; private set; }
 
     public void OnMoveInput(InputAction.CallbackContext context)
@@ -27,4 +29,18 @@ public class PlayerInputHandler : MonoBehaviour
             isRunning = !isRunning;
         }
     }
+
+    public void OnAttackInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            attackInput = true;
+        }
+
+        if (context.canceled)
+        {
+            attackInput = false;
+        }
+    }
+    
 }

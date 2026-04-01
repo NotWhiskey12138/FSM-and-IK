@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
     public PlayerIdleState IdleState { get; private set; }
     public PlayerWalkState WalkState { get; private set; }
     public PlayerRunState RunState { get; private set; }
+    public PlayerAttackState Attack1State { get; private set; }
+    public PlayerAttackState Attack2State { get; private set; }
+    public PlayerAttackState Attack3State { get; private set; }
     
     [Header("可视数据")]
     [SerializeField] private PlayerData playerData;
@@ -34,6 +37,10 @@ public class Player : MonoBehaviour
         IdleState = new PlayerIdleState(this, stateMachine, playerData, "idle");
         WalkState = new PlayerWalkState(this, stateMachine, playerData, "walk");
         RunState = new PlayerRunState(this, stateMachine, playerData, "run");
+
+        Attack1State = new PlayerAttackState(this, stateMachine, playerData, "attack");
+        Attack2State = new PlayerAttackState(this, stateMachine, playerData, "attack");
+        Attack3State = new PlayerAttackState(this, stateMachine, playerData, "attack");
     }
 
     private void Start()

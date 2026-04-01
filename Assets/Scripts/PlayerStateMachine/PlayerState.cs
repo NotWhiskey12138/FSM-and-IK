@@ -46,5 +46,9 @@ public class PlayerState
     
     public virtual void AnimationTrigger(){}
 
-    public virtual void AnimationFinishedTrigger() => isAnimationFinished = true;
+    public virtual void AnimationFinishedTrigger()
+    {
+        //Debug.Log(animBoolName + " animation finished");
+        isAnimationFinished = true;
+    }
 }

@@ -45,5 +45,6 @@ public class PlayerAbilityState : PlayerState
     public override void DoCheck()
     {
         base.DoCheck();
+        isGrounded = player.CheckIfTouchingGrounded();
     }
 }

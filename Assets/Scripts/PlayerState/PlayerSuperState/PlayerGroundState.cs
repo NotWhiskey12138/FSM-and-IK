@@ -31,6 +31,11 @@ public class PlayerGroundState : PlayerState
         xInput = player.InputHandler.xInput;
         yInput = player.InputHandler.yInput;
         isRunning =  player.InputHandler.isRunning;
+
+        if (player.InputHandler.attackInput)
+        {
+            stateMachine.ChangeState(player.Attack1State);
+        }
         
     }
 
