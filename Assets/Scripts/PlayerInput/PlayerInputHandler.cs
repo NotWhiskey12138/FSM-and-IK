@@ -11,8 +11,8 @@ public class PlayerInputHandler : MonoBehaviour
     public bool isRunning { get; private set; }
     public bool isSprinting { get; private set; }
     public bool ikActive { get; private set; }
-    
     public bool attackInput { get; private set; }
+    public bool isAiming { get; private set; }
     
     public Vector2 PlayerMoveInput { get; private set; }
 
@@ -62,6 +62,14 @@ public class PlayerInputHandler : MonoBehaviour
         if (context.started)
         {
             ikActive = !ikActive;
+        }
+    }
+
+    public void OnAimInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            isAiming = !isAiming;
         }
     }
 }

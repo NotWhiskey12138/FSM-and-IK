@@ -23,17 +23,11 @@ public class FootIKHandler : MonoBehaviour
     [Header("射线参数")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float footOffset = 0.1f;
-    [Tooltip("射线从脚向上偏移多高开始（要高于最大台阶高度）")]
     [SerializeField] private float rayStartHeight = 0.6f;
     [SerializeField] private float rayLength = 1.5f;
 
     [Header("平滑")]
     [SerializeField] private float footYSmooth = 15f;
-    [Tooltip("身体跟随高度变化的速度")]
-    [SerializeField] private float bodyYSmooth = 8f;
-
-    [Header("身体高度补偿")]
-    [SerializeField] private float maxBodyRaise = 0.5f;
 
     [Header("动画名")]
     [SerializeField] private string leftCurveName = "l_Foot_IK";
@@ -43,7 +37,6 @@ public class FootIKHandler : MonoBehaviour
     private float rightSmoothY;
     private float leftGroundY;
     private float rightGroundY;
-    private float bodyOffsetY;
 
     private void Start()
     {
@@ -101,10 +94,7 @@ public class FootIKHandler : MonoBehaviour
 
             float targetY = hit.point.y + footOffset;
             smoothY = Mathf.Lerp(smoothY, targetY, Time.deltaTime * footYSmooth);
-
-#if UNITY_EDITOR
-            Debug.DrawLine(rayOrigin, hit.point, Color.green);
-#endif
+            
         }
         else
         {
@@ -112,22 +102,8 @@ public class FootIKHandler : MonoBehaviour
         }
 
         ikTarget.position = new Vector3(bone.position.x, smoothY, bone.position.z);
-        ikTarget.rotation = bone.rotation;
+        Quaternion slopeRot = Quaternion.FromToRotation(Vector3.up, hit.normal);
+        ikTarget.rotation = slopeRot * bone.rotation;
     }
-
-#if UNITY_EDITOR
-    private void OnDrawGizmosSelected()
-    {
-        if (leftFootBone != null)
-        {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(new Vector3(leftFootBone.position.x, leftGroundY, leftFootBone.position.z), 0.05f);
-        }
-        if (rightFootBone != null)
-        {
-            Gizmos.color = Color.magenta;
-            Gizmos.DrawWireSphere(new Vector3(rightFootBone.position.x, rightGroundY, rightFootBone.position.z), 0.05f);
-        }
-    }
-#endif
+    
 }

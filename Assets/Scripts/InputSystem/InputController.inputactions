@@ -50,6 +50,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Aim",
+                    "type": "Button",
+                    "id": "4b4ba56b-45dc-485c-87fb-bceb886443c8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -144,11 +153,22 @@
                 {
                     "name": "",
                     "id": "d28fabd7-2be0-467c-b7de-2ceb633a0f7f",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyBoard",
+                    "action": "IKController",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6eade1cb-9fa8-4bb4-8300-12b38a696965",
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "IKController",
+                    "groups": ";KeyBoard",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

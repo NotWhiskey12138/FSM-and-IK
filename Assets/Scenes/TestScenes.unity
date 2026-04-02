@@ -3294,6 +3294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 7406814398779078200}
+  inputHandler: {fileID: 6269011677309287615}
   offset: {x: 0, y: 2, z: 0}
   distance: 3
   minDistance: 2
@@ -3304,6 +3305,9 @@ MonoBehaviour:
   maxPitch: 60
   followSmooth: 0.05
   zoomSmooth: 8
+  aimDistance: 2
+  aimOffset: {x: 0.5, y: 1.6, z: 0}
+  aimTransitionSpeed: 8
 --- !u!1 &1099260732
 GameObject:
   m_ObjectHideFlags: 0
@@ -5781,6 +5785,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1348614339
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1348614340}
+  m_Layer: 0
+  m_Name: AimTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1348614340
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348614339}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.451, z: 2.292}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7406814398779078200}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1398205413
 Mesh:
@@ -9533,6 +9568,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 8d1500d2-79cd-4f1c-8028-27837db85a10
     m_ActionName: GamePlay/IKController[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6269011677309287615}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnAimInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4b4ba56b-45dc-485c-87fb-bceb886443c8
+    m_ActionName: GamePlay/Aim[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: KeyBoard
   m_DefaultActionMap: GamePlay
@@ -10917,6 +10968,7 @@ Transform:
   - {fileID: 16617422259570434}
   - {fileID: 391985896}
   - {fileID: 2113359506}
+  - {fileID: 1348614340}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &7442430301792428999
@@ -11050,6 +11102,7 @@ GameObject:
   - component: {fileID: 7890758306825366659}
   - component: {fileID: 7890758306825366661}
   - component: {fileID: 7890758306825366662}
+  - component: {fileID: 7890758306825366663}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -11151,8 +11204,6 @@ MonoBehaviour:
   rayStartHeight: 0.6
   rayLength: 1.5
   footYSmooth: 15
-  bodyYSmooth: 8
-  maxBodyRaise: 0.5
   leftCurveName: l_Foot_IK
   rightCurveName: r_Foot_IK
 --- !u!114 &7890758306825366662
@@ -11172,6 +11223,21 @@ MonoBehaviour:
   leftArmIK: {fileID: 896901866}
   rightArmIK: {fileID: 1434089685}
   transitionSpeed: 5
+--- !u!114 &7890758306825366663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7890758306825366658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0ca00c5e863b44bbeba312960b6c66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aimTarget: {fileID: 1348614340}
+  camTransform: {fileID: 963194228}
+  aimDistance: 10
 --- !u!23 &7898706588334257700
 MeshRenderer:
   m_ObjectHideFlags: 0

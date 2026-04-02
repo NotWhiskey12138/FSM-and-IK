@@ -5,6 +5,7 @@ public class CameraController : MonoBehaviour
 {
     [Header("角色参数")]
     [SerializeField] private Transform target;          
+    [SerializeField] private PlayerInputHandler inputHandler;
     
     [Header("相机参数")]
     [SerializeField] private Vector3 offset = new Vector3(0f, 2f, 0f); 
@@ -17,15 +18,24 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float maxPitch = 60f;      
     [SerializeField] private float followSmooth = 0.05f; 
     [SerializeField] private float zoomSmooth = 8f;     
+    
+    [Header("过肩瞄准参数")]
+    [SerializeField] private float aimDistance = 2f;           
+    [SerializeField] private Vector3 aimOffset = new Vector3(0.5f, 1.6f, 0f);  
+    [SerializeField] private float aimTransitionSpeed = 8f;    
 
-    private float _yaw;              
-    private float _pitch = 20f;      
-    private float _currentDistance;  
-    private Vector3 _smoothVelocity; 
+    private float yaw;              
+    private float pitch = 20f;      
+    private float currentDistance;  
+    private Vector3 smoothVelocity; 
+    private Vector3 currentOffset;
+    private float targetDistance;
 
     private void Start()
     {
-        _currentDistance = distance;
+        currentDistance = distance;
+        currentOffset = offset;
+        targetDistance = distance;
     }
 
     private void LateUpdate()
@@ -33,22 +43,35 @@ public class CameraController : MonoBehaviour
         if (target == null) return;
 
         Vector2 delta = Mouse.current.delta.ReadValue();
-        _yaw += delta.x * rotationSpeed;
-        _pitch -= delta.y * rotationSpeed;  
-        _pitch = Mathf.Clamp(_pitch, minPitch, maxPitch); 
+        yaw += delta.x * rotationSpeed;
+        pitch -= delta.y * rotationSpeed;  
+        pitch = Mathf.Clamp(pitch, minPitch, maxPitch); 
 
-        float scroll = Mouse.current.scroll.ReadValue().y;
-        distance -= scroll * zoomSpeed * Time.deltaTime;
-        distance = Mathf.Clamp(distance, minDistance, maxDistance);
+        bool isAiming = inputHandler != null && inputHandler.isAiming;
 
-        _currentDistance = Mathf.Lerp(_currentDistance, distance, Time.deltaTime * zoomSmooth);
+        if (isAiming)
+        {
+            targetDistance = aimDistance;
+            currentOffset = Vector3.Lerp(currentOffset, aimOffset, aimTransitionSpeed * Time.deltaTime);
+        }
+        else
+        {
+            float scroll = Mouse.current.scroll.ReadValue().y;
+            distance -= scroll * zoomSpeed * Time.deltaTime;
+            distance = Mathf.Clamp(distance, minDistance, maxDistance);
+            targetDistance = distance;
+            currentOffset = Vector3.Lerp(currentOffset, offset, Time.deltaTime * aimTransitionSpeed);
+        }
+        
+        currentDistance = Mathf.Lerp(currentDistance, targetDistance, 
+            Time.deltaTime * zoomSmooth);
 
-        Vector3 lookAt = target.position + offset;
+        // 关键：过肩视角的偏移要跟着相机旋转
+        Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
+        Vector3 lookAt = target.position + rotation * currentOffset;
+        Vector3 targetPos = lookAt + rotation * new Vector3(0f, 0f, -currentDistance);
 
-        Quaternion rotation = Quaternion.Euler(_pitch, _yaw, 0f);
-        Vector3 targetPos = lookAt + rotation * new Vector3(0f, 0f, -_currentDistance);
-
-        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref _smoothVelocity, followSmooth);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref smoothVelocity, followSmooth);
         transform.LookAt(lookAt);
     }
 }

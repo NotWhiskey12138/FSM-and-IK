@@ -8,6 +8,7 @@ public class PlayerGroundState : PlayerState
     protected float yInput;
     protected bool isRunning;
     protected bool isSprinting;
+    protected bool isAiming;
 
     private bool isGrounded;
     
@@ -33,8 +34,13 @@ public class PlayerGroundState : PlayerState
         yInput = player.InputHandler.yInput;
         isRunning =  player.InputHandler.isRunning;
         isSprinting = player.InputHandler.isSprinting;
+        isAiming = player.InputHandler.isAiming;
 
-        if (player.InputHandler.attackInput)
+        if (isAiming)
+        {
+            stateMachine.ChangeState(player.AimState);
+        }
+        else if (player.InputHandler.attackInput)
         {
             player.attackCounter = 0;
             stateMachine.ChangeState(player.Attack1State);

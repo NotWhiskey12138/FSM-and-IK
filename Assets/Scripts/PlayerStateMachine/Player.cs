@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public PlayerRunState RunState { get; private set; }
     public PlayerSprintState SprintState { get; private set; }
     public PlayerAttackState Attack1State { get; private set; }
+    public PlayerAimState AimState { get; private set; }
     public bool useRootMotion { get; set; }
     
     [Header("可视数据")]
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour
         WalkState = new PlayerWalkState(this, stateMachine, playerData, "walk");
         RunState = new PlayerRunState(this, stateMachine, playerData, "run");
         SprintState = new PlayerSprintState(this, stateMachine, playerData, "sprint");
+        AimState = new PlayerAimState(this, stateMachine, playerData, "aim");
 
         Attack1State = new PlayerAttackState(this, stateMachine, playerData, "attack");
     }
@@ -185,4 +187,25 @@ public class Player : MonoBehaviour
             rigid.MoveRotation(rigid.rotation * anim.deltaRotation);
         }
     }
+    
+    #region Camera
+
+    public Vector3 GetCameraForward()
+    {
+        Vector3 camForward = camTransform.forward;
+        camForward.y = 0f;
+        return camForward.normalized;
+    }
+
+    public void FaceDirection(Vector3 dir)
+    {
+        if (dir.sqrMagnitude > 0.01f)
+        {
+            Quaternion newRotation = Quaternion.LookRotation(dir);
+            rigid.MoveRotation(Quaternion.Slerp(rigid.rotation, newRotation, 
+                Time.fixedDeltaTime * 10f));
+        }
+    }
+    
+    #endregion
 }

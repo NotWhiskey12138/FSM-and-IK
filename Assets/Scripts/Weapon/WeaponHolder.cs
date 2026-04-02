@@ -21,7 +21,8 @@ public class WeaponHolder : MonoBehaviour
 
     void Start()
     {
-        DrawWeapon();
+        //DrawWeapon();
+        SheathWeapon();
     }
 
     public void DrawWeapon()
