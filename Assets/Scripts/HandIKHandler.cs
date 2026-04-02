@@ -20,28 +20,15 @@ public class HandIKHandler : MonoBehaviour
     [SerializeField] private float transitionSpeed = 5f; 
     
     private bool ikActive = true;
-    private float targetWeight = 1f;
-
-    private void Start()
-    {
-        inputHandler.OnIKOpenInput += (ikActive)=> { };;
-    }
 
     void Update()
     {
-        // 平滑过渡，避免瞬间跳变
-        armRig.weight = Mathf.Lerp(armRig.weight, targetWeight, 
+        float target = inputHandler.ikActive ? 1 : 0;
+        armRig.weight = Mathf.Lerp(armRig.weight, target, 
             Time.deltaTime * transitionSpeed);
-    }
-
-    // 也可以外部调用，比如收刀时关闭IK
-    public void SetIK(bool active)
-    {
-        ikActive = active;
-        targetWeight = active ? 1f : 0f;
+        
     }
     
-    // 只控制某只手的IK（比如持武器的手开IK，另一只关）
     public void SetSingleArmIK(bool isLeft, float weight)
     {
         if (isLeft && leftArmIK != null)

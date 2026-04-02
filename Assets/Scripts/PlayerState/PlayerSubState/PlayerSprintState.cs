@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerSprintState : PlayerGroundState
 {
+    private bool isDashDone;
+    
     public PlayerSprintState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -11,6 +13,8 @@ public class PlayerSprintState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
+
+        isDashDone = false;
         
         player.useRootMotion = true;
     }
@@ -29,7 +33,7 @@ public class PlayerSprintState : PlayerGroundState
         if (stateMachine.currentState != this)
             return;
 
-        if (!isSprinting)
+        if (!isSprinting && isDashDone)
         {
             if (xInput == 0 && yInput == 0)
             {
@@ -57,5 +61,12 @@ public class PlayerSprintState : PlayerGroundState
     public override void DoCheck()
     {
         base.DoCheck();
+    }
+
+    public override void AnimationFinishedTrigger()
+    {
+        base.AnimationFinishedTrigger();
+        
+        isDashDone = true;
     }
 }

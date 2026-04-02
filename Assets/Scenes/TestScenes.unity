@@ -9348,7 +9348,6 @@ Transform:
   - {fileID: 7041549620013905994}
   - {fileID: 1354138044664828979}
   - {fileID: 4276856729732390290}
-  - {fileID: 5603277464032965398}
   m_Father: {fileID: 7406814398779078200}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &174696980705812705
@@ -9518,6 +9517,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ec958d93-1263-4f99-96f0-8e3c04b6b180
     m_ActionName: GamePlay/Sprint[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6269011677309287615}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnIKInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8d1500d2-79cd-4f1c-8028-27837db85a10
+    m_ActionName: GamePlay/IKController[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: KeyBoard
   m_DefaultActionMap: GamePlay
@@ -9785,6 +9800,7 @@ GameObject:
   - component: {fileID: 5603277464032965398}
   - component: {fileID: 1612221690513317184}
   - component: {fileID: 2279632045695613045}
+  - component: {fileID: 5603277464032965399}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -10114,6 +10130,7 @@ Transform:
   m_Children:
   - {fileID: 5099019188325294649}
   - {fileID: 1146826755923262791}
+  - {fileID: 5603277464032965398}
   m_Father: {fileID: 3078318559777404266}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4276856729732390290
@@ -10578,13 +10595,33 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2364897229716628851}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.004453122, y: 0.0010264217, z: -0.7026673, w: 0.711504}
-  m_LocalPosition: {x: 0.060777627, y: -0.34564328, z: -0.045237184}
-  m_LocalScale: {x: 0.72166955, y: 0.7216697, z: 0.72167003}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.089, y: 0, z: -0.021}
+  m_LocalScale: {x: 0.7216694, y: 0.7216696, z: 0.72166973}
+  m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 16617422259570434}
+  m_Father: {fileID: 4256348407901688958}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5603277464032965399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2364897229716628851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3043129d5661d324a86f2fd7b3af0d5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightHand: {fileID: 4256348407901688958}
+  backMount: {fileID: 4769878053533661770}
+  weapon: {fileID: 2364897229716628851}
+  handPosOffset: {x: 0.089, y: 0, z: -0.021}
+  handRotOffset: {x: 0, y: 0, z: 0}
+  backPosOffset: {x: -0.205, y: -0.202, z: 0.11}
+  backRotOffset: {x: 90, y: 0, z: 45}
+  isWeaponDrawn: 1
 --- !u!23 &5631601757428238230
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11012,6 +11049,7 @@ GameObject:
   - component: {fileID: 7890758306825366660}
   - component: {fileID: 7890758306825366659}
   - component: {fileID: 7890758306825366661}
+  - component: {fileID: 7890758306825366662}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -11117,6 +11155,23 @@ MonoBehaviour:
   maxBodyRaise: 0.5
   leftCurveName: l_Foot_IK
   rightCurveName: r_Foot_IK
+--- !u!114 &7890758306825366662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7890758306825366658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfcdd7661b805f94bb8faf3a9742c0da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputHandler: {fileID: 6269011677309287615}
+  armRig: {fileID: 391985895}
+  leftArmIK: {fileID: 896901866}
+  rightArmIK: {fileID: 1434089685}
+  transitionSpeed: 5
 --- !u!23 &7898706588334257700
 MeshRenderer:
   m_ObjectHideFlags: 0

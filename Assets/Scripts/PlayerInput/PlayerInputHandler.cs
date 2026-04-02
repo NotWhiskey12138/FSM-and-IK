@@ -10,6 +10,7 @@ public class PlayerInputHandler : MonoBehaviour
     public float yInput { get; private set; }
     public bool isRunning { get; private set; }
     public bool isSprinting { get; private set; }
+    public bool ikActive { get; private set; }
     
     public bool attackInput { get; private set; }
     
@@ -55,5 +56,12 @@ public class PlayerInputHandler : MonoBehaviour
             attackInput = false;
         }
     }
-    
+
+    public void OnIKInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            ikActive = !ikActive;
+        }
+    }
 }
