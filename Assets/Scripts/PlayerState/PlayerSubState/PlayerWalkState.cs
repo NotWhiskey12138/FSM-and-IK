@@ -45,8 +45,9 @@ public class PlayerWalkState : PlayerGroundState
     {
         base.PhysicsUpdate();
 
-        player.SetVelocityHorizontal(xInput * playerData.walkSpeed, yInput * playerData.walkSpeed);
-        player.SetRotation(xInput, yInput, playerData.turnSpeed);
+        Vector3 moveDir = player.GetCameraDirection(xInput, yInput);
+        player.SetVelocityHorizontal(moveDir.x * playerData.walkSpeed, moveDir.z * playerData.walkSpeed);
+        player.SetRotation(moveDir.x, moveDir.z, playerData.turnSpeed);
     }
 
     public override void DoCheck()

@@ -20,6 +20,9 @@ public class Player : MonoBehaviour
     
     [Header("攻击属性")]
     [HideInInspector] public int attackCounter = 0;
+
+    [Header("相机")] 
+    [SerializeField] private Transform camTransform;
     
     public Animator anim { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
@@ -153,6 +156,18 @@ public class Player : MonoBehaviour
 
     public bool CanUseFootIK() {
         return stateMachine.currentState == IdleState || stateMachine.currentState == WalkState || stateMachine.currentState == RunState;
+    }
+
+    public Vector3 GetCameraDirection(float xInput, float yInput)
+    {
+        Vector3 camForward = camTransform.forward;
+        Vector3 camRight = camTransform.right;
+        camForward.y = 0f;
+        camRight.y = 0f;
+        camForward.Normalize();
+        camRight.Normalize();
+        
+        return (camForward * yInput + camRight * xInput).normalized;
     }
 
     /// <summary>

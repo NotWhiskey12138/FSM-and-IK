@@ -2983,6 +2983,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3057,13 +3058,36 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.082578585, y: -0, z: -0, w: 0.99658453}
-  m_LocalPosition: {x: 0, y: 2.16, z: -2.9}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 9.474, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34cb78d64817b11428daf2ddabdda86c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 7406814398779078200}
+  offset: {x: 0, y: 2, z: 0}
+  distance: 3
+  minDistance: 2
+  maxDistance: 15
+  zoomSpeed: 0.5
+  rotationSpeed: 0.3
+  minPitch: -20
+  maxPitch: 60
+  followSmooth: 0.05
+  zoomSmooth: 8
 --- !u!1 &1099260732
 GameObject:
   m_ObjectHideFlags: 0
@@ -9068,6 +9092,7 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: bb02123b0d5292349a258d29a1f3f1f5, type: 2}
   groundCheckPoint: {fileID: 6710269287236228141}
   attackCounter: 0
+  camTransform: {fileID: 963194228}
 --- !u!4 &252345248194653454
 Transform:
   m_ObjectHideFlags: 0
