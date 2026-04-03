@@ -22,9 +22,12 @@ public class WeaponHolder : MonoBehaviour
     void Start()
     {
         //DrawWeapon();
-        SheathWeapon();
+        //SheathWeapon();
     }
 
+    /// <summary>
+    /// 持有状态偏移
+    /// </summary>
     public void DrawWeapon()
     {
         weapon.transform.SetParent(rightHand);
@@ -33,6 +36,9 @@ public class WeaponHolder : MonoBehaviour
         isWeaponDrawn = true;
     }
 
+    /// <summary>
+    /// 收起状态偏移
+    /// </summary>
     public void SheathWeapon()
     {
         weapon.transform.SetParent(backMount);
@@ -40,4 +46,13 @@ public class WeaponHolder : MonoBehaviour
         weapon.transform.localEulerAngles = backRotOffset;
         isWeaponDrawn = false;
     }
+
+    /// <summary>
+    /// 用于Attack2的剑的反转
+    /// </summary>
+    public void RotateWeapon(Vector3 rotation)
+    {
+        this.transform.localRotation = Quaternion.Euler(rotation);
+    }
+    
 }

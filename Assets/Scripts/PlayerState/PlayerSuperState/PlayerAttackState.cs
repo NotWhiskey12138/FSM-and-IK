@@ -23,6 +23,8 @@ public class PlayerAttackState : PlayerAbilityState
         
         player.FootIK?.SetFootIK(false);
         player.HandIK?.SetAimIK(false);
+        
+        player.weapon.DrawWeapon();
     }
 
     public override void Exit()
@@ -30,6 +32,8 @@ public class PlayerAttackState : PlayerAbilityState
         base.Exit();
 
         player.useRootMotion = false;
+        
+        player.weapon.SheathWeapon();
     }
 
     public override void LogicUpdate()
@@ -52,6 +56,15 @@ public class PlayerAttackState : PlayerAbilityState
                 canCombo = false;
                 shouldCombo = false;
                 isAnimationFinished = false;
+
+                if (player.attackCounter == 1)
+                {
+                    player.weapon.RotateWeapon(new Vector3(0,0,180));
+                }
+                else
+                {
+                    player.weapon.RotateWeapon(new Vector3(0,0,0));
+                }
  
                 player.anim.SetInteger("attackCounter", player.attackCounter);
                 player.anim.SetTrigger("attackNext");
@@ -98,8 +111,4 @@ public class PlayerAttackState : PlayerAbilityState
         Debug.Log("=== AnimationFinished 被调用了 ===");
     }
 
-    protected virtual void StateTransfer()
-    {
-        
-    }
 }

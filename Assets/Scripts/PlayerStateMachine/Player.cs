@@ -24,6 +24,9 @@ public class Player : MonoBehaviour
 
     [Header("相机")] 
     [SerializeField] private Transform camTransform;
+
+    [Header("武器")]
+    public WeaponHolder weapon;
     
     public Animator anim { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
