@@ -110,7 +110,7 @@
       <workItem from="1774916718968" duration="1382000" />
       <workItem from="1775004710841" duration="23814000" />
       <workItem from="1775095697786" duration="15780000" />
-      <workItem from="1775181304816" duration="18257000" />
+      <workItem from="1775181304816" duration="19264000" />
     </task>
     <servers />
   </component>
@@ -142,6 +142,19 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/PlayerState/PlayerSuperState/PlayerAttackState.cs</url>
+          <line>62</line>
+          <properties documentPath="E:\Unity Projects\2026miHoYo\2026miHoyo\Assets\Scripts\PlayerState\PlayerSuperState\PlayerAttackState.cs" containingFunctionPresentation="方法 'LogicUpdate'">
+            <startOffsets>
+              <option value="1593" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1594" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

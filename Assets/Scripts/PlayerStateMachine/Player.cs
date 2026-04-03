@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public int attackCounter = 0;
 
     [Header("相机")] 
-    [SerializeField] private Transform camTransform;
+    public CameraController camTransform;
 
     [Header("武器")]
     public WeaponHolder weapon;
@@ -64,6 +64,8 @@ public class Player : MonoBehaviour
         InputHandler = GetComponent<PlayerInputHandler>();
         rigid = GetComponent<Rigidbody>();
         MovementCollider = GetComponent<CapsuleCollider>();
+        camTransform = Camera.main.GetComponent<CameraController>();
+        
         
         HandIK = GetComponent<HandIKHandler>();
         FootIK = GetComponent<FootIKHandler>();
@@ -170,8 +172,8 @@ public class Player : MonoBehaviour
 
     public Vector3 GetCameraDirection(float xInput, float yInput)
     {
-        Vector3 camForward = camTransform.forward;
-        Vector3 camRight = camTransform.right;
+        Vector3 camForward = camTransform.transform.forward;
+        Vector3 camRight = camTransform.transform.right;
         camForward.y = 0f;
         camRight.y = 0f;
         camForward.Normalize();
@@ -200,7 +202,7 @@ public class Player : MonoBehaviour
 
     public Vector3 GetCameraForward()
     {
-        Vector3 camForward = camTransform.forward;
+        Vector3 camForward = camTransform.transform.forward;
         camForward.y = 0f;
         return camForward.normalized;
     }

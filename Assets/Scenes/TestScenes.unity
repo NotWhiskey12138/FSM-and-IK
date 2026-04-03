@@ -3309,6 +3309,8 @@ MonoBehaviour:
   aimTransitionSpeed: 6
   aimMinPitch: -20
   aimMaxPitch: 20
+  sprintDistance: 4
+  sprintOffset: {x: 0, y: 1.8, z: 0}
 --- !u!1 &1099260732
 GameObject:
   m_ObjectHideFlags: 0
@@ -9568,7 +9570,7 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: bb02123b0d5292349a258d29a1f3f1f5, type: 2}
   groundCheckPoint: {fileID: 6710269287236228141}
   attackCounter: 0
-  camTransform: {fileID: 963194228}
+  camTransform: {fileID: 963194229}
   weapon: {fileID: 5603277464032965399}
 --- !u!4 &252345248194653454
 Transform:

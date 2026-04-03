@@ -19,12 +19,13 @@ public class PlayerSprintState : PlayerGroundState
         
         player.FootIK?.SetFootIK(false);
         player.HandIK?.SetAimIK(false);
+        player.camTransform?.SetSprintCam(true);
     }
 
     public override void Exit()
     {
         base.Exit();
-        
+        player.camTransform?.SetSprintCam(false);
         player.useRootMotion = false;
     }
 

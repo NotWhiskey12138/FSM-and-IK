@@ -25,6 +25,10 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float aimTransitionSpeed = 8f;
     [SerializeField] private float aimMinPitch = -30f;   
     [SerializeField] private float aimMaxPitch = 40f;
+    
+    [Header("冲刺相机参数")]
+    [SerializeField] private float sprintDistance = 3.5f;
+    [SerializeField] private Vector3 sprintOffset = new Vector3(0f, 1.8f, 0f);
 
     private float yaw;
     private float pitch = 20f;
@@ -32,6 +36,7 @@ public class CameraController : MonoBehaviour
     private Vector3 smoothVelocity;
     private Vector3 currentOffset;
     private float targetDistance;
+    private bool isSprintCam = false;
 
     private void Start()
     {
@@ -53,13 +58,16 @@ public class CameraController : MonoBehaviour
 
         if (isAiming)
         {
-            pitch = Mathf.Clamp(pitch, aimMinPitch, aimMaxPitch);
             targetDistance = aimDistance;
             currentOffset = Vector3.Lerp(currentOffset, aimOffset, aimTransitionSpeed * Time.deltaTime);
         }
+        else if (isSprintCam)
+        {
+            targetDistance = sprintDistance;
+            currentOffset = Vector3.Lerp(currentOffset, sprintOffset, aimTransitionSpeed * Time.deltaTime);
+        }
         else
         {
-            pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
             float scroll = Mouse.current.scroll.ReadValue().y;
             distance -= scroll * zoomSpeed * Time.deltaTime;
             distance = Mathf.Clamp(distance, minDistance, maxDistance);
@@ -76,5 +84,10 @@ public class CameraController : MonoBehaviour
 
         transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref smoothVelocity, followSmooth);
         transform.LookAt(lookAt);
+    }
+    
+    public void SetSprintCam(bool active)
+    {
+        isSprintCam = active;
     }
 }
