@@ -56,9 +56,9 @@ public class PlayerSprintState : PlayerGroundState
     {
         base.PhysicsUpdate();
         
-        Vector3 moveDir = player.GetCameraDirection(xInput, yInput);
+        Vector3 moveDir = player.GetCameraForward();
         player.SetVelocityHorizontal(moveDir.x * playerData.sprintSpeed, moveDir.z * playerData.sprintSpeed);
-        player.SetRotation(moveDir.x, moveDir.z, playerData.turnSpeed);
+        player.FaceDirection(moveDir);
     }
 
     public override void DoCheck()

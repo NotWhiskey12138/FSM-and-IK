@@ -16,6 +16,9 @@ public class PlayerInputHandler : MonoBehaviour
     
     public Vector2 PlayerMoveInput { get; private set; }
 
+    private float sprintCooldown = 0.3f;
+    private float lastSprintTime = -1f;
+
     public void OnMoveInput(InputAction.CallbackContext context)
     {
         PlayerMoveInput = context.ReadValue<Vector2>();
@@ -36,7 +39,11 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (context.performed)
         {
-            isSprinting = true;
+            if (Time.time - lastSprintTime > sprintCooldown)
+            {
+                isSprinting = true;
+                lastSprintTime = Time.time;
+            }
         }
         else if (context.canceled)
         {

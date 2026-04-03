@@ -137,7 +137,8 @@ public class Player : MonoBehaviour
     /// <param name="zInput">z轴输入</param>
     public void SetVelocityHorizontal(float xInput, float zInput)
     {
-        workspace.Set(xInput, currentVelocity.y, zInput);
+        // 用rigidbody实际的y速度，让重力正常累积
+        workspace.Set(xInput, rigid.velocity.y, zInput);
         rigid.velocity = workspace;
         currentVelocity = workspace;
     }
