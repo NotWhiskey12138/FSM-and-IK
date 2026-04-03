@@ -29,6 +29,9 @@ public class Player : MonoBehaviour
     public PlayerInputHandler InputHandler { get; private set; }
     public Rigidbody rigid { get; private set; }
     public CapsuleCollider MovementCollider { get; private set; }
+    public HandIKHandler HandIK { get; private set; }
+    public FootIKHandler FootIK { get; private set; }
+    
 
     private Vector3 workspace;
     private Vector3 Direction;
@@ -48,6 +51,8 @@ public class Player : MonoBehaviour
         AimState = new PlayerAimState(this, stateMachine, playerData, "aim");
 
         Attack1State = new PlayerAttackState(this, stateMachine, playerData, "attack");
+        
+        HandIK = GetComponent<HandIKHandler>();
     }
 
     private void Start()
@@ -56,6 +61,9 @@ public class Player : MonoBehaviour
         InputHandler = GetComponent<PlayerInputHandler>();
         rigid = GetComponent<Rigidbody>();
         MovementCollider = GetComponent<CapsuleCollider>();
+        
+        HandIK = GetComponent<HandIKHandler>();
+        FootIK = GetComponent<FootIKHandler>();
         
         stateMachine.InitializeState(IdleState);
         
@@ -66,7 +74,8 @@ public class Player : MonoBehaviour
         stateMachine.currentState.LogicUpdate();
         
         //Debug.Log(currentVelocity);
-        Debug.Log(stateMachine.currentState);
+        //Debug.Log(stateMachine.currentState);
+        anim.SetFloat("velocity", currentVelocity.magnitude);
     }
 
     private void FixedUpdate()
@@ -155,10 +164,6 @@ public class Player : MonoBehaviour
     private void AnimationTrigger() => stateMachine.currentState.AnimationTrigger();
         
     private void AnimationFinishedTrigger() => stateMachine.currentState.AnimationFinishedTrigger();
-
-    public bool CanUseFootIK() {
-        return stateMachine.currentState == IdleState || stateMachine.currentState == WalkState || stateMachine.currentState == RunState;
-    }
 
     public Vector3 GetCameraDirection(float xInput, float yInput)
     {

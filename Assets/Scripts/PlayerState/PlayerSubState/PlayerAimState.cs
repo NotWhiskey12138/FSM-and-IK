@@ -11,11 +11,15 @@ public class PlayerAimState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
+        player.HandIK.SetAimIK(true);
+        player.HandIK.ShowBow(true);
     }
 
     public override void Exit()
     {
         base.Exit();
+        player.HandIK.SetAimIK(false);
+        player.HandIK.ShowBow(false);
     }
 
     public override void LogicUpdate()

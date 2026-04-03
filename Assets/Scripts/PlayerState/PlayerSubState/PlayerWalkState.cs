@@ -12,12 +12,14 @@ public class PlayerWalkState : PlayerGroundState
     {
         base.Enter();
         
-        
+        player.FootIK?.SetFootIK(true);
+        player.HandIK?.SetAimIK(false);
     }
 
     public override void Exit()
     {
         base.Exit();
+        player.HandIK?.SetAimIK(false);
     }
 
     public override void LogicUpdate()

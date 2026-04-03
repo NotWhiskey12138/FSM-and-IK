@@ -12,7 +12,8 @@ public class PlayerRunState : PlayerGroundState
     {
         base.Enter();
         
-        
+        player.FootIK?.SetFootIK(true);
+        player.HandIK?.SetAimIK(false);
     }
 
     public override void Exit()

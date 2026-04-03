@@ -15,8 +15,10 @@ public class PlayerSprintState : PlayerGroundState
         base.Enter();
 
         isDashDone = false;
-        
         player.useRootMotion = true;
+        
+        player.FootIK?.SetFootIK(false);
+        player.HandIK?.SetAimIK(false);
     }
 
     public override void Exit()

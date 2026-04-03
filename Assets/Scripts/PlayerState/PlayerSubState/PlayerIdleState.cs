@@ -13,6 +13,9 @@ public class PlayerIdleState : PlayerGroundState
         base.Enter();
         
         player.SetVelocityZero();
+
+        player.FootIK?.SetFootIK(true);
+        player.FootIK?.SetFootIK(false);
     }
 
     public override void Exit()

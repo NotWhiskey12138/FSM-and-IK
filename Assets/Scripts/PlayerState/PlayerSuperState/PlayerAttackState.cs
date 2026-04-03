@@ -20,6 +20,9 @@ public class PlayerAttackState : PlayerAbilityState
         player.anim.SetInteger("attackCounter", player.attackCounter);
 
         player.useRootMotion = true;
+        
+        player.FootIK?.SetFootIK(false);
+        player.HandIK?.SetAimIK(false);
     }
 
     public override void Exit()

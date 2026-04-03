@@ -38,6 +38,8 @@ public class FootIKHandler : MonoBehaviour
     private float leftGroundY;
     private float rightGroundY;
 
+    private bool isFootIKActive = true;  // 外部控制
+
     private void Start()
     {
         if (player == null) player = GetComponent<Player>();
@@ -56,15 +58,27 @@ public class FootIKHandler : MonoBehaviour
         }
     }
 
+    // ===== 外部接口 =====
+
+    /// <summary>
+    /// 状态机调用：开关脚部IK
+    /// </summary>
+    public void SetFootIK(bool active)
+    {
+        isFootIKActive = active;
+    }
+
+    // ===== 内部逻辑 =====
+
     private void LateUpdate()
     {
-        float leftWeight = animator.GetFloat(leftCurveName);
-        float rightWeight = animator.GetFloat(rightCurveName);
+        float leftWeight = 0f;
+        float rightWeight = 0f;
 
-        if (!player.CanUseFootIK())
+        if (isFootIKActive)
         {
-            leftWeight = 0f;
-            rightWeight = 0f;
+            leftWeight = animator.GetFloat(leftCurveName);
+            rightWeight = animator.GetFloat(rightCurveName);
         }
 
         if (leftIK != null) leftIK.weight = leftWeight;
@@ -72,12 +86,6 @@ public class FootIKHandler : MonoBehaviour
 
         ProcessFoot(leftFootBone, leftFootIKTarget, ref leftSmoothY, ref leftGroundY);
         ProcessFoot(rightFootBone, rightFootIKTarget, ref rightSmoothY, ref rightGroundY);
-    }
-
-    private void FixedUpdate()
-    {
-        if (!player.CanUseFootIK()) return;
-
     }
 
     private void ProcessFoot(Transform bone, Transform ikTarget,
@@ -94,7 +102,6 @@ public class FootIKHandler : MonoBehaviour
 
             float targetY = hit.point.y + footOffset;
             smoothY = Mathf.Lerp(smoothY, targetY, Time.deltaTime * footYSmooth);
-            
         }
         else
         {
@@ -102,8 +109,11 @@ public class FootIKHandler : MonoBehaviour
         }
 
         ikTarget.position = new Vector3(bone.position.x, smoothY, bone.position.z);
-        Quaternion slopeRot = Quaternion.FromToRotation(Vector3.up, hit.normal);
-        ikTarget.rotation = slopeRot * bone.rotation;
+
+        if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit rotHit, rayLength, groundLayer))
+        {
+            Quaternion slopeRot = Quaternion.FromToRotation(Vector3.up, rotHit.normal);
+            ikTarget.rotation = slopeRot * bone.rotation;
+        }
     }
-    
 }
