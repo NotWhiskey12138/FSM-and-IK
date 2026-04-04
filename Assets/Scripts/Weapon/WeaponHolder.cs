@@ -22,7 +22,7 @@ public class WeaponHolder : MonoBehaviour
     void Start()
     {
         //DrawWeapon();
-        //SheathWeapon();
+        SheathWeapon();
     }
 
     /// <summary>

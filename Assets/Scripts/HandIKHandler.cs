@@ -135,10 +135,6 @@ public class HandIKHandler : MonoBehaviour
         headAim.weight = Mathf.Lerp(headAim.weight, 1f, Time.deltaTime * transitionSpeed);
         headAim.weight = Mathf.Clamp01(headAim.weight);
 
-        // 身体跟随
-        //bodyAim.weight = Mathf.Lerp(bodyAim.weight, 1f, Time.deltaTime * transitionSpeed);
-        //bodyAim.weight = Mathf.Clamp01(bodyAim.weight);
-
         // 弓旋转
         bowTransform.localPosition = bowAimPos;
         bowTransform.localEulerAngles = bowAimRot;
