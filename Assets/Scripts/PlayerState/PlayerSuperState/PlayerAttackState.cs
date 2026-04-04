@@ -101,14 +101,12 @@ public class PlayerAttackState : PlayerAbilityState
     public override void AnimationTrigger()
     {
         base.AnimationTrigger();
-        Debug.Log("=== AnimationTrigger(canCombo) 被调用了 ===");
         canCombo = true;
     }
 
     public override void AnimationFinishedTrigger()
     {
         base.AnimationFinishedTrigger();
-        Debug.Log("=== AnimationFinished 被调用了 ===");
     }
 
 }

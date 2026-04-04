@@ -24,8 +24,8 @@ public class HandIKHandler : MonoBehaviour
     [Header("瞄准手部位置")]
     [SerializeField] private Transform leftHandTarget;
     [SerializeField] private Transform rightHandTarget;
-    [SerializeField] private Transform bowGrip;          // 弓握把
-    [SerializeField] private Transform bowStringGrip;    // 弓弦位置
+    [SerializeField] private Transform bowGrip;        
+    [SerializeField] private Transform bowStringGrip;   
 
     [Header("弓")]
     [SerializeField] private Transform bowTransform;
@@ -67,8 +67,6 @@ public class HandIKHandler : MonoBehaviour
         HandleAimIK();
     }
 
-    // ===== 外部接口 =====
-
     /// <summary>
     /// 状态机调用：开关瞄准IK
     /// </summary>
@@ -96,8 +94,6 @@ public class HandIKHandler : MonoBehaviour
         armRig.weight = weight;
     }
 
-    // ===== 内部逻辑 =====
-
     private void HandleAimIK()
     {
         bool isAiming = isAimIKActive;
@@ -115,27 +111,22 @@ public class HandIKHandler : MonoBehaviour
             return;
         }
 
-        // 左手 — 握弓
         leftArmIK.weight = Mathf.Lerp(leftArmIK.weight, 1f, Time.deltaTime * transitionSpeed);
         leftArmIK.weight = Mathf.Clamp01(leftArmIK.weight);
         leftHandTarget.position = bowGrip.position;
         leftHandTarget.rotation = bowGrip.rotation;
 
-        // 右手 — 拉弦
         rightArmIK.weight = Mathf.Lerp(rightArmIK.weight, 1f, Time.deltaTime * transitionSpeed);
         rightArmIK.weight = Mathf.Clamp01(rightArmIK.weight);
         rightHandTarget.position = bowStringGrip.position;
         rightHandTarget.rotation = bowStringGrip.rotation;
 
-        // 瞄准点
         Vector3 aimPoint = camTransform.position + camTransform.forward * aimDistance;
         aimTarget.position = Vector3.Lerp(aimTarget.position, aimPoint, Time.deltaTime * transitionSpeed);
 
-        // 头部跟随
         headAim.weight = Mathf.Lerp(headAim.weight, 1f, Time.deltaTime * transitionSpeed);
         headAim.weight = Mathf.Clamp01(headAim.weight);
 
-        // 弓旋转
         bowTransform.localPosition = bowAimPos;
         bowTransform.localEulerAngles = bowAimRot;
     }

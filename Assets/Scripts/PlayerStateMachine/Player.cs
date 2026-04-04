@@ -210,6 +210,10 @@ public class Player : MonoBehaviour
     
     #region Camera
 
+    /// <summary>
+    /// 获取摄像机正前方向
+    /// </summary>
+    /// <returns></returns>
     public Vector3 GetCameraForward()
     {
         Vector3 camForward = camTransform.transform.forward;
@@ -217,6 +221,10 @@ public class Player : MonoBehaviour
         return camForward.normalized;
     }
 
+    /// <summary>
+    /// 正面面对方向
+    /// </summary>
+    /// <param name="dir"></param>
     public void FaceDirection(Vector3 dir)
     {
         if (dir.sqrMagnitude > 0.01f)
@@ -231,6 +239,9 @@ public class Player : MonoBehaviour
 
     #region IK synchronous
 
+    /// <summary>
+    /// Animation Event
+    /// </summary>
     public void OnLeftFootLand()
     {
         isLeftFootLanding = true;
@@ -242,6 +253,9 @@ public class Player : MonoBehaviour
         leftFootLandTimes[hash] = normalizedTime;
     }
 
+    /// <summary>
+    /// Animation Event
+    /// </summary>
     public void OnRightFootLand()
     {
         isLeftFootLanding = false;
