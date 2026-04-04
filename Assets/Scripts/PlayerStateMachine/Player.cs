@@ -41,6 +41,15 @@ public class Player : MonoBehaviour
     private float turnAmount;
     public Vector3 currentVelocity { get; private set; }
     
+    [Header("脚步同步")]
+    private int footPhaseHash = Animator.StringToHash("FootPhase");
+
+    private Dictionary<int, float> leftFootLandTimes = new Dictionary<int, float>();
+    public bool isLeftFootLanding { get; private set; }
+    public float lastFootLandTime { get; private set; }
+    public float walkLeftLand { get; private set; }
+    public float runLeftLand { get; private set; }
+    
     
 
     private void Awake()
@@ -218,5 +227,52 @@ public class Player : MonoBehaviour
         }
     }
     
+    #endregion
+
+    #region IK synchronous
+
+    public void OnLeftFootLand()
+    {
+        isLeftFootLanding = true;
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        float normalizedTime = stateInfo.normalizedTime % 1f;
+        lastFootLandTime = normalizedTime;
+    
+        int hash = stateInfo.shortNameHash;
+        leftFootLandTimes[hash] = normalizedTime;
+    }
+
+    public void OnRightFootLand()
+    {
+        isLeftFootLanding = false;
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        lastFootLandTime = stateInfo.normalizedTime % 1f;
+    }
+    
+    /// <summary>
+    /// 同步脚步到目标动画
+    /// </summary>
+    public void SyncFootPhase(string targetStateName)
+    {
+        int targetHash = Animator.StringToHash(targetStateName);
+        AnimatorStateInfo currentInfo = anim.GetCurrentAnimatorStateInfo(0);
+        int currentHash = currentInfo.shortNameHash;
+    
+        float currentPhase = currentInfo.normalizedTime % 1f;
+    
+        if (leftFootLandTimes.ContainsKey(currentHash) && leftFootLandTimes.ContainsKey(targetHash))
+        {
+            float fromLand = leftFootLandTimes[currentHash];
+            float toLand = leftFootLandTimes[targetHash];
+            float relativePhase = (currentPhase - fromLand + 1f) % 1f;
+            float targetPhase = (relativePhase + toLand) % 1f;
+            anim.SetFloat(footPhaseHash, targetPhase);
+        }
+        else
+        {
+            anim.SetFloat(footPhaseHash, currentPhase);
+        }
+    }
+
     #endregion
 }

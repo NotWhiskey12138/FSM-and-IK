@@ -14,6 +14,7 @@ public class PlayerWalkState : PlayerGroundState
         
         player.FootIK?.SetFootIK(true);
         player.HandIK?.SetAimIK(false);
+        player.SyncFootPhase("walk");
     }
 
     public override void Exit()
