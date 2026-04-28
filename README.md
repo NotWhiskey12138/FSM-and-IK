@@ -9,3 +9,4 @@ AWSD----movement<br>
 Ctrl----change walk and run<br>
 Shift----Sprint<br>
 Left Mouse----Attack<br>
+R----Aim
